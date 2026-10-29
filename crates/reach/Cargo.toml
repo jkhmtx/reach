@@ -1,0 +1,11 @@
+[package]
+name = "reach"
+description = "Extensible AST traversal tool for building a cross-language dependency graph"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+reach-core.workspace = true

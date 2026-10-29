@@ -1,0 +1,8 @@
+[package]
+name = "reach-core"
+description = "Core graph and traversal types for reach"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
