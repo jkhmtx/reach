@@ -28,10 +28,6 @@ src/main.rs=src/cli.rs
 src/main.rs=src/graph.rs
 ```
 
-Each line is one edge, `from=to`. Paths are relative to the directory of the config file. Output is sorted, so the same input gives the same output.
-
-Reach does not run `cargo`, `node`, `python` or any other toolchain, and it does not use the network. Imports it cannot resolve are printed as placeholder nodes with the specifier as written. Third-party packages are printed as leaf nodes and are not walked.
-
 #### Flags
 
 - `--config <path>`: the config file. The default is `./reach.toml`.
@@ -45,7 +41,15 @@ Reach does not run `cargo`, `node`, `python` or any other toolchain, and it does
 
 ## Writing Plugins
 
-A plugin adds a language to Reach. Plugins are declarative: a plugin is a TOML manifest, tree-sitter queries and a tree-sitter grammar compiled to WebAssembly. Plugins do not run code. The built-in Rust, JavaScript, TypeScript and Python support uses the same plugin format.
+A plugin adds a language to Reach. Plugins are declarative, and contain:
+
+- a TOML manifest
+- tree-sitter queries
+- a tree-sitter grammar compiled to WebAssembly
+
+(Plugins do not run code)
+
+The built-in Rust, JavaScript, TypeScript and Python support uses the same plugin format, if you need inspo.
 
 ### Plugin layout
 
@@ -83,7 +87,7 @@ $ tree-sitter build --wasm --output grammar.wasm path/to/tree-sitter-go
 
 ### Manifest
 
-`plugin.toml` defines the language, the files it applies to and how to turn a specifier into file paths.
+`plugin.toml` configures the language, matching files, and how to turn a specifier into file paths.
 
 ```toml
 [language]
@@ -146,11 +150,11 @@ Templates support these variables:
 
 ### Testing a plugin
 
-Run Reach on a file in the plugin's language with `--format tree --strict`. Imports your rules do not resolve make the run exit with a non-zero code.
+Run Reach on a file in the plugin's language with `--format tree --strict`. If the rules don't support full import resolution, you'll get a non-zero exit code.
 
 ## Configuration Reference
 
-Reach reads `./reach.toml`, or the file passed with `--config`. It does not search parent directories. Paths in the file are relative to the directory of the config file. All keys are optional.
+Reach reads `./reach.toml`, or the file passed with `--config`. Paths in the file are relative to the directory of the config file. All keys are optional.
 
 ```toml
 format = "kvp"
